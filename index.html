@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JarraQan Family</title>
+<style>
+body {
+    margin:0;
+    font-family:'Arial',sans-serif;
+    overflow:hidden;
+    color:#fff;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background: radial-gradient(circle at center,#4b0082,#1a0033);
+    perspective:800px;
+}
+
+/* Header */
+h1 {
+    font-size:4em;
+    text-align:center;
+    text-shadow:0 0 20px #ff00ff,0 0 40px #ff00ff,0 0 60px #ff00ff;
+    margin-bottom:50px;
+}
+
+/* Buttons */
+.btn {
+    background:none;
+    border:2px solid #ff00ff;
+    padding:15px 30px;
+    margin:10px;
+    font-size:1.5em;
+    color:#fff;
+    cursor:pointer;
+    border-radius:12px;
+    text-decoration:none;
+    position:relative;
+    overflow:hidden;
+    transition:0.3s;
+}
+.btn::before {
+    content:'';
+    position:absolute;
+    top:-50%;
+    left:-50%;
+    width:200%;
+    height:200%;
+    background: conic-gradient(#ff00ff,#4b0082,#00ffff,#ff00ff);
+    animation: rotate 3s linear infinite;
+    z-index:-1;
+}
+@keyframes rotate { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+.btn:hover { color:#ff00ff; box-shadow:0 0 10px #ff00ff,0 0 20px #ff00ff,0 0 30px #ff00ff; }
+
+/* Popup */
+.popup {
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background: radial-gradient(circle at center,#4b0082,#1a0033);
+    border:2px solid #ff00ff;
+    border-radius:15px;
+    padding:20px;
+    z-index:100;
+    color:#fff;
+    min-width:300px;
+    text-align:center;
+}
+.popup button.close {
+    position:absolute;
+    top:5px;
+    right:10px;
+    background:#ff00ff;
+    border:none;
+    color:#fff;
+    font-size:1em;
+    padding:5px 10px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+/* Bottom buttons container */
+.bottom-buttons {
+    display:flex;
+    justify-content:center;
+    margin-top:20px;
+}
+
+/* Footer */
+footer {
+    position:absolute;
+    bottom:10px;
+    text-align:center;
+    font-size:0.9em;
+    color:#ccc;
+}
+
+/* Star */
+.star {
+    position:absolute;
+    border-radius:50%;
+    background:white;
+    opacity:0.8;
+    animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle {
+    0% { opacity:0.1; }
+    50% { opacity:1; }
+    100% { opacity:0.1; }
+}
+</style>
+</head>
+<body>
+
+<h1>JarraQan Family</h1>
+
+<a href="https://t.me/TheJarraQan" class="btn" target="_blank">Telegram</a>
+
+<div class="bottom-buttons">
+    <button class="btn" onclick="copyIPAndShowPopup('cs','5.57.32.48:27015')">JarraQan Cs1.6</button>
+    <button class="btn" onclick="showPopup('terraria')">JarraQan Terraria</button>
+</div>
+
+<div class="popup" id="cs">
+    <button class="close" onclick="closePopup('cs')">×</button>
+    <p>برای ورود به سرور ایپی کپی شده رو داخل کنسول بازی به صورت زیر وارد کنید:</p>
+    <p><strong>Connect 5.57.32.48:27015</strong></p>
+</div>
+
+<div class="popup" id="terraria">
+    <button class="close" onclick="closePopup('terraria')">×</button>
+    <p>برای ورود به سرور تراریا به ایدی ادمین‌ها مراجعه کنید و ایپی و پسورد سرور را دریافت کنید:</p>
+    <p><a href="https://t.me/TxSetyzz" target="_blank">T.me/TxSetyzz</a></p>
+    <p><a href="https://t.me/Pdydeh" target="_blank">T.me/Pdydeh</a></p>
+</div>
+
+<footer>Developed by <a href="https://t.me/TxSetyzz" target="_blank">Sina Hesaraki</a></footer>
+
+<script>
+// Popup
+function showPopup(id){ document.getElementById(id).style.display='block'; }
+function closePopup(id){ document.getElementById(id).style.display='none'; }
+
+// Copy IP and show popup
+function copyIPAndShowPopup(popupId, ip){
+    navigator.clipboard.writeText(ip).then(()=>{
+        showPopup(popupId);
+    }).catch(()=>{
+        showPopup(popupId);
+    });
+}
+
+// Stars
+const starCount=300;
+let stars=[];
+for(let i=0;i<starCount;i++){
+    let s=document.createElement('div');
+    s.className='star';
+    let size=Math.random()*2+1;
+    s.style.width=s.style.height=size+'px';
+    s.dataset.x=Math.random()*window.innerWidth;
+    s.dataset.y=Math.random()*window.innerHeight;
+    s.dataset.z=Math.random()*1000;
+    s.dataset.speed=0.3+Math.random()*1;
+    document.body.appendChild(s);
+    stars.push(s);
+}
+
+// Animate stars 3D-like
+function animateStars(){
+    stars.forEach(s=>{
+        s.dataset.x=parseFloat(s.dataset.x)+s.dataset.speed;
+        if(s.dataset.x>window.innerWidth) s.dataset.x=0;
+        let scale=1-(s.dataset.z/1000);
+        s.style.transform=`translate3d(${s.dataset.x}px,${s.dataset.y}px,0) scale(${scale})`;
+        s.style.opacity=0.3+0.7*scale;
+    });
+    requestAnimationFrame(animateStars);
+}
+animateStars();
+</script>
+
+</body>
+</html>
