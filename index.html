@@ -2,188 +2,169 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>The JarraQan</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JarraQan Family</title>
+
 <style>
-body {
-    margin:0;
-    font-family:'Arial',sans-serif;
+/* ========== RESET & FULLSCREEN ========== */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+    width:100%;
+    height:100%;
     overflow:hidden;
-    color:#fff;
-    height:100vh;
+    background:#000;
+    font-family:'Poppins','Orbitron',system-ui;
+}
+
+/* ========== CANVAS ========== */
+canvas{
+    position:fixed;
+    inset:0;
+}
+
+/* ========== SEXY TITLE ========== */
+#title{
+    position:fixed;
+    inset:0;
     display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
-    background: radial-gradient(circle at center,#4b0082,#1a0033);
-    perspective:800px;
+    font-size:clamp(3.5rem,9vw,11rem);
+    font-weight:900;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    pointer-events:none;
+
+    /* 🔥 Gradient Text */
+    background:linear-gradient(
+        120deg,
+        #ff00ff,
+        #7f00ff,
+        #00ffff,
+        #ffffff,
+        #ff00ff
+    );
+    background-size:300% 300%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+
+    /* Glow Stack */
+    filter:
+        drop-shadow(0 0 10px rgba(255,0,255,.6))
+        drop-shadow(0 0 30px rgba(120,0,255,.6))
+        drop-shadow(0 0 70px rgba(0,255,255,.6));
+
+    animation:
+        gradientFlow 6s ease infinite,
+        breathe 4s ease-in-out infinite;
 }
 
-/* Header */
-h1 {
-    font-size:4em;
-    text-align:center;
-    text-shadow:0 0 20px #ff00ff,0 0 40px #ff00ff,0 0 60px #ff00ff;
-    margin-bottom:50px;
+/* ========== TEXT ANIMS ========== */
+@keyframes gradientFlow{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes breathe{
+    0%{transform:scale(1);opacity:.85}
+    50%{transform:scale(1.03);opacity:1}
+    100%{transform:scale(1);opacity:.85}
 }
 
-/* Buttons */
-.btn {
-    background:none;
-    border:2px solid #ff00ff;
-    padding:15px 30px;
-    margin:10px;
-    font-size:1.5em;
-    color:#fff;
-    cursor:pointer;
-    border-radius:12px;
-    text-decoration:none;
-    position:relative;
-    overflow:hidden;
-    transition:0.3s;
-}
-.btn::before {
-    content:'';
-    position:absolute;
-    top:-50%;
-    left:-50%;
-    width:200%;
-    height:200%;
-    background: conic-gradient(#ff00ff,#4b0082,#00ffff,#ff00ff);
-    animation: rotate 3s linear infinite;
-    z-index:-1;
-}
-@keyframes rotate { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
-.btn:hover { color:#ff00ff; box-shadow:0 0 10px #ff00ff,0 0 20px #ff00ff,0 0 30px #ff00ff; }
-
-/* Popup */
-.popup {
-    display:none;
+/* ========== AURA ========== */
+#aura{
     position:fixed;
     top:50%;
     left:50%;
+    width:700px;
+    height:700px;
     transform:translate(-50%,-50%);
-    background: radial-gradient(circle at center,#4b0082,#1a0033);
-    border:2px solid #ff00ff;
-    border-radius:15px;
-    padding:20px;
-    z-index:100;
-    color:#fff;
-    min-width:300px;
-    text-align:center;
+    background:
+        radial-gradient(circle,
+        rgba(255,0,255,.35),
+        rgba(0,255,255,.18),
+        transparent 70%);
+    filter:blur(90px);
+    animation: spin 22s linear infinite;
+    pointer-events:none;
 }
-.popup button.close {
-    position:absolute;
-    top:5px;
-    right:10px;
-    background:#ff00ff;
-    border:none;
-    color:#fff;
-    font-size:1em;
-    padding:5px 10px;
-    border-radius:50%;
-    cursor:pointer;
+@keyframes spin{
+    from{transform:translate(-50%,-50%) rotate(0deg)}
+    to{transform:translate(-50%,-50%) rotate(360deg)}
 }
 
-/* Bottom buttons container */
-.bottom-buttons {
-    display:flex;
-    justify-content:center;
-    margin-top:20px;
+/* ========== OVERLAYS ========== */
+.vignette{
+    position:fixed;
+    inset:0;
+    box-shadow:inset 0 0 300px #000;
+    pointer-events:none;
 }
-
-/* Footer */
-footer {
-    position:absolute;
-    bottom:10px;
-    text-align:center;
-    font-size:0.9em;
-    color:#ccc;
-}
-
-/* Star */
-.star {
-    position:absolute;
-    border-radius:50%;
-    background:white;
-    opacity:0.8;
-    animation: twinkle 2s infinite alternate;
-}
-@keyframes twinkle {
-    0% { opacity:0.1; }
-    50% { opacity:1; }
-    100% { opacity:0.1; }
+.noise{
+    position:fixed;
+    inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+    pointer-events:none;
 }
 </style>
 </head>
+
 <body>
 
-<h1>JarraQan Family</h1>
-
-<a href="https://t.me/TheJarraQan" class="btn" target="_blank">Telegram</a>
-
-<div class="bottom-buttons">
-    <button class="btn" onclick="copyIPAndShowPopup('cs','5.57.32.48:27015')">JarraQan Cs1.6</button>
-    <button class="btn" onclick="showPopup('terraria')">JarraQan Terraria</button>
-</div>
-
-<div class="popup" id="cs">
-    <button class="close" onclick="closePopup('cs')">×</button>
-    <p>برای ورود به سرور ایپی کپی شده رو داخل کنسول بازی به صورت زیر وارد کنید:</p>
-    <p><strong>Connect 5.57.32.48:27015</strong></p>
-</div>
-
-<div class="popup" id="terraria">
-    <button class="close" onclick="closePopup('terraria')">×</button>
-    <p>برای ورود به سرور تراریا به ایدی ادمین‌ها مراجعه کنید و ایپی و پسورد سرور را دریافت کنید:</p>
-    <p><a href="https://t.me/TxSetyzz" target="_blank">T.me/TxSetyzz</a></p>
-    <p><a href="https://t.me/Pdydeh" target="_blank">T.me/Pdydeh</a></p>
-</div>
-
-<footer>Developed by <a href="https://t.me/TxSetyzz" target="_blank">Sina Hesaraki</a></footer>
+<canvas id="bg"></canvas>
+<div id="aura"></div>
+<div id="title">The&nbsp;JarraQan</div>
+<div class="vignette"></div>
+<div class="noise"></div>
 
 <script>
-// Popup
-function showPopup(id){ document.getElementById(id).style.display='block'; }
-function closePopup(id){ document.getElementById(id).style.display='none'; }
+/* ========== CANVAS ENGINE ========== */
+const c = document.getElementById("bg");
+const x = c.getContext("2d");
+let w,h;
 
-// Copy IP and show popup
-function copyIPAndShowPopup(popupId, ip){
-    navigator.clipboard.writeText(ip).then(()=>{
-        showPopup(popupId);
-    }).catch(()=>{
-        showPopup(popupId);
+function resize(){
+    w = c.width = innerWidth;
+    h = c.height = innerHeight;
+}
+addEventListener("resize",resize);
+resize();
+
+/* ========== STARS ========== */
+const stars=[];
+const COUNT=1000;
+for(let i=0;i<COUNT;i++){
+    stars.push({
+        x:Math.random()*w,
+        y:Math.random()*h,
+        z:Math.random()*w,
+        o:Math.random()
     });
 }
 
-// Stars
-const starCount=300;
-let stars=[];
-for(let i=0;i<starCount;i++){
-    let s=document.createElement('div');
-    s.className='star';
-    let size=Math.random()*2+1;
-    s.style.width=s.style.height=size+'px';
-    s.dataset.x=Math.random()*window.innerWidth;
-    s.dataset.y=Math.random()*window.innerHeight;
-    s.dataset.z=Math.random()*1000;
-    s.dataset.speed=0.3+Math.random()*1;
-    document.body.appendChild(s);
-    stars.push(s);
-}
+/* ========== LOOP (FPS آزاد) ========== */
+function loop(){
+    x.fillStyle="rgba(0,0,25,.45)";
+    x.fillRect(0,0,w,h);
 
-// Animate stars 3D-like
-function animateStars(){
-    stars.forEach(s=>{
-        s.dataset.x=parseFloat(s.dataset.x)+s.dataset.speed;
-        if(s.dataset.x>window.innerWidth) s.dataset.x=0;
-        let scale=1-(s.dataset.z/1000);
-        s.style.transform=`translate3d(${s.dataset.x}px,${s.dataset.y}px,0) scale(${scale})`;
-        s.style.opacity=0.3+0.7*scale;
-    });
-    requestAnimationFrame(animateStars);
+    for(let s of stars){
+        s.z-=2.8;
+        if(s.z<=0) s.z=w;
+
+        let px=(s.x-w/2)*(w/s.z)+w/2;
+        let py=(s.y-h/2)*(w/s.z)+h/2;
+        let r=(w/s.z)*1.6;
+
+        x.beginPath();
+        x.fillStyle=`rgba(200,160,255,${s.o})`;
+        x.arc(px,py,r,0,Math.PI*2);
+        x.fill();
+    }
+    requestAnimationFrame(loop);
 }
-animateStars();
+loop();
 </script>
 
 </body>
