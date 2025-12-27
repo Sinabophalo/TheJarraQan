@@ -1,170 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>The JarraQan</title>
+<title>برای پارمیس</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ========== RESET & FULLSCREEN ========== */
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#000;
-    font-family:'Poppins','Orbitron',system-ui;
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600&display=swap');
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #ffd6e8, #f8a1c4);
+  font-family: 'Vazirmatn', sans-serif;
+  overflow-x: hidden;
 }
 
-/* ========== CANVAS ========== */
-canvas{
-    position:fixed;
-    inset:0;
+.container {
+  width: 90%;
+  max-width: 600px;
+  margin: 80px auto;
 }
 
-/* ========== SEXY TITLE ========== */
-#title{
-    position:fixed;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:clamp(3.5rem,9vw,11rem);
-    font-weight:900;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    pointer-events:none;
-
-    /* 🔥 Gradient Text */
-    background:linear-gradient(
-        120deg,
-        #ff00ff,
-        #7f00ff,
-        #00ffff,
-        #ffffff,
-        #ff00ff
-    );
-    background-size:300% 300%;
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-
-    /* Glow Stack */
-    filter:
-        drop-shadow(0 0 10px rgba(255,0,255,.6))
-        drop-shadow(0 0 30px rgba(120,0,255,.6))
-        drop-shadow(0 0 70px rgba(0,255,255,.6));
-
-    animation:
-        gradientFlow 6s ease infinite,
-        breathe 4s ease-in-out infinite;
+.glass {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease;
 }
 
-/* ========== TEXT ANIMS ========== */
-@keyframes gradientFlow{
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-@keyframes breathe{
-    0%{transform:scale(1);opacity:.85}
-    50%{transform:scale(1.03);opacity:1}
-    100%{transform:scale(1);opacity:.85}
+.glass.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* ========== AURA ========== */
-#aura{
-    position:fixed;
-    top:50%;
-    left:50%;
-    width:700px;
-    height:700px;
-    transform:translate(-50%,-50%);
-    background:
-        radial-gradient(circle,
-        rgba(255,0,255,.35),
-        rgba(0,255,255,.18),
-        transparent 70%);
-    filter:blur(90px);
-    animation: spin 22s linear infinite;
-    pointer-events:none;
-}
-@keyframes spin{
-    from{transform:translate(-50%,-50%) rotate(0deg)}
-    to{transform:translate(-50%,-50%) rotate(360deg)}
+p {
+  font-size: 18px;
+  line-height: 2;
+  color: #4a2c3a;
+  text-align: center;
 }
 
-/* ========== OVERLAYS ========== */
-.vignette{
-    position:fixed;
-    inset:0;
-    box-shadow:inset 0 0 300px #000;
-    pointer-events:none;
+
+.heart {
+  position: fixed;
+  bottom: -20px;
+  color: rgba(255,255,255,0.85);
+  font-size: 20px;
+  animation: floatUp 8s linear infinite;
+  pointer-events: none;
 }
-.noise{
-    position:fixed;
-    inset:0;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
-    mix-blend-mode:overlay;
-    pointer-events:none;
+
+@keyframes floatUp {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to { transform: translateY(-120vh) scale(1.5); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="bg"></canvas>
-<div id="aura"></div>
-<div id="title">The&nbsp;JarraQan</div>
-<div class="vignette"></div>
-<div class="noise"></div>
+<div class="container">
+  <div class="glass"><p>پارمیس،<br>گذشته شبیه پیام‌های قدیمیه…</p></div>
+
+  <div class="glass"><p>
+    می‌تونی هی بازشون کنی و دوباره حس بگیری،<br>
+    یا یه بار تصمیم بگیری<br>
+    بذاری تو آرشیو
+  </p></div>
+
+  <div class="glass"><p>
+    و به چت‌های قشنگ‌تری فکر کنی<br>
+    که هنوز نوشته نشدن.
+  </p></div>
+
+  <div class="glass"><p>
+    زندگی وقتی جذاب‌تره<br>
+    که کمتر اسکرول کنیم رو خاطرات<br>
+    و بیشتر تایپ کنیم رو آینده.
+  </p></div>
+
+  <div class="glass"><p>
+    من طرفدار ادامه‌دادنم،<br>
+    اونم با حال خوب 🙂
+  </p></div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://filesamples.com/samples/audio/mp3/sample3.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-/* ========== CANVAS ENGINE ========== */
-const c = document.getElementById("bg");
-const x = c.getContext("2d");
-let w,h;
+const cards = document.querySelectorAll('.glass');
+let index = 0;
+let started = false;
+const music = document.getElementById('bgMusic');
 
-function resize(){
-    w = c.width = innerWidth;
-    h = c.height = innerHeight;
-}
-addEventListener("resize",resize);
-resize();
-
-/* ========== STARS ========== */
-const stars=[];
-const COUNT=1000;
-for(let i=0;i<COUNT;i++){
-    stars.push({
-        x:Math.random()*w,
-        y:Math.random()*h,
-        z:Math.random()*w,
-        o:Math.random()
-    });
+function showNext() {
+  if (index < cards.length) {
+    cards[index].classList.add('show');
+    cards[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    index++;
+    setTimeout(showNext, 3000);
+  }
 }
 
-/* ========== LOOP (FPS آزاد) ========== */
-function loop(){
-    x.fillStyle="rgba(0,0,25,.45)";
-    x.fillRect(0,0,w,h);
+document.body.addEventListener('click', () => {
+  if (!started) {
+    started = true;
+    music.volume = 0.4;
+    music.play();
+    showNext();
+    createHearts();
+  }
+});
 
-    for(let s of stars){
-        s.z-=2.8;
-        if(s.z<=0) s.z=w;
-
-        let px=(s.x-w/2)*(w/s.z)+w/2;
-        let py=(s.y-h/2)*(w/s.z)+h/2;
-        let r=(w/s.z)*1.6;
-
-        x.beginPath();
-        x.fillStyle=`rgba(200,160,255,${s.o})`;
-        x.arc(px,py,r,0,Math.PI*2);
-        x.fill();
-    }
-    requestAnimationFrame(loop);
+function createHearts() {
+  setInterval(() => {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerHTML = '❤';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (16 + Math.random()*20) + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+  }, 700);
 }
-loop();
 </script>
 
 </body>
