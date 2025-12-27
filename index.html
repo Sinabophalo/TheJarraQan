@@ -1,138 +1,91 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-<meta charset="UTF-8">
-<title>برای پارمیس</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شاهکار ❤️</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: sans-serif;
+            overflow: hidden;
+        }
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600&display=swap');
+        body {
+            background-image: url('https://i.ibb.co/rRDbnbDQ'); /* عکس بک‌گراند */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: radial-gradient(circle at top, #ffd6e8, #f8a1c4);
-  font-family: 'Vazirmatn', sans-serif;
-  overflow-x: hidden;
-}
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
 
-.container {
-  width: 90%;
-  max-width: 600px;
-  margin: 80px auto;
-}
+        .overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding-bottom: 50px;
+        }
 
-.glass {
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(12px);
-  border-radius: 25px;
-  padding: 30px;
-  margin-bottom: 30px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 1s ease;
-}
+        .overlay h1 {
+            font-size: 48px;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px black;
+        }
 
-.glass.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            background: pink;
+            color: black;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+            margin-bottom: 20px;
+        }
 
-p {
-  font-size: 18px;
-  line-height: 2;
-  color: #4a2c3a;
-  text-align: center;
-}
-
-
-.heart {
-  position: fixed;
-  bottom: -20px;
-  color: rgba(255,255,255,0.85);
-  font-size: 20px;
-  animation: floatUp 8s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes floatUp {
-  from { transform: translateY(0) scale(1); opacity: 1; }
-  to { transform: translateY(-120vh) scale(1.5); opacity: 0; }
-}
-</style>
+        button:active {
+            transform: scale(0.95);
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
-  <div class="glass"><p>پارمیس،<br>گذشته شبیه پیام‌های قدیمیه…</p></div>
+    <div class="overlay">
+        <h1>شاهکار</h1>
+        <button onclick="playMusic()">پخش آهنگ 🎵</button>
+    </div>
 
-  <div class="glass"><p>
-    می‌تونی هی بازشون کنی و دوباره حس بگیری،<br>
-    یا یه بار تصمیم بگیری<br>
-    بذاری تو آرشیو
-  </p></div>
+    <audio id="music" loop>
+        <source src="https://limewire.com/d/piFvY#A51hftsb7K" type="audio/mpeg">
+        مرورگر شما از پخش صوت پشتیبانی نمی‌کند
+    </audio>
 
-  <div class="glass"><p>
-    و به چت‌های قشنگ‌تری فکر کنی<br>
-    که هنوز نوشته نشدن.
-  </p></div>
-
-  <div class="glass"><p>
-    زندگی وقتی جذاب‌تره<br>
-    که کمتر اسکرول کنیم رو خاطرات<br>
-    و بیشتر تایپ کنیم رو آینده.
-  </p></div>
-
-  <div class="glass"><p>
-    من طرفدار ادامه‌دادنم،<br>
-    اونم با حال خوب 🙂
-  </p></div>
-</div>
-
-<audio id="bgMusic" loop>
-  <source src="https://limewire.com/d/piFvY#A51hftsb7K" type="audio/mpeg">
-</audio>
-
-<script>
-const cards = document.querySelectorAll('.glass');
-let index = 0;
-let started = false;
-const music = document.getElementById('bgMusic');
-
-function showNext() {
-  if (index < cards.length) {
-    cards[index].classList.add('show');
-    cards[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    index++;
-    setTimeout(showNext, 3000);
-  }
-}
-
-document.body.addEventListener('click', () => {
-  if (!started) {
-    started = true;
-    music.volume = 0.4;
-    music.play();
-    showNext();
-    createHearts();
-  }
-});
-
-function createHearts() {
-  setInterval(() => {
-    const heart = document.createElement('div');
-    heart.className = 'heart';
-    heart.innerHTML = '❤';
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.fontSize = (16 + Math.random()*20) + 'px';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 8000);
-  }, 700);
-}
-</script>
+    <script>
+        function playMusic() {
+            const music = document.getElementById("music");
+            music.play();
+        }
+    </script>
 
 </body>
 </html>
-
